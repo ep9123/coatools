@@ -23,4 +23,3 @@ useradd -s /bin/bash -d /opt/stack -m stack
 echo "stack ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 echo "ubuntu ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
-
