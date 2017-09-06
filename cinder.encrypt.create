@@ -1,0 +1,26 @@
+#
+set -x
+
+openstack volume type create LUKS
+
+cinder encryption-type-create \
+ --cipher aes-xts-plain64 \
+ --key_size 512 \
+ --control_location front-end LUKS \
+ nova.encryptors.luks.LuksEncryptor
+
+# cinder create --display-name crypt-vol --volume-type LUKS 1
+openstack volume create --size 1 --type LUKS crypt-vol
+
+openstack volume show crypt-vol
+
+openstack server create --flavor m1.tiny --image cirros --key-name eep-key --security-group web-ssh crypt-inst
+
+openstack server list 
+
+sleep 20
+
+openstack server show crypt-inst
+
+openstack server add volume --device /dev/vdb crypt-inst crypt-vol 
+

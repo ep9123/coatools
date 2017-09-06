@@ -1,0 +1,6 @@
+#
+set -x
+
+openstack security group create --description "Allow http and ssh" web-ssh
+openstack security group rule create --protocol tcp --ingress --dst-port 22 web-ssh
+openstack security group rule create --protocol tcp --ingress --dst-port 80 web-ssh

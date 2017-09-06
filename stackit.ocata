@@ -1,0 +1,31 @@
+#
+# devstack ocata install
+sudo apt-get -y update
+sudo apt-get -y upgrade
+sudo apt-get -y install git vim
+
+# as stack user  (sudo -iu stack) execute commands below to build local.conf file
+
+git clone https://git.openstack.org/openstack-dev/devstack -b stable/ocata
+sed -i "s:-git:-http:g" ~/devstack/stackrc
+
+echo '[[local|localrc]]' >> /opt/stack/devstack/local.conf
+echo 'LOGFILE=/opt/stack/logs/stack.sh.log' >> /opt/stack/devstack/local.conf
+echo 'HOST_IP=10.0.2.15' >> /opt/stack/devstack/local.conf
+echo 'FORCE=yes' >> /opt/stack/devstack/local.conf
+echo 'ADMIN_PASSWORD=Secret123' >> /opt/stack/devstack/local.conf
+echo 'DATABASE_PASSWORD=Secret123' >> /opt/stack/devstack/local.conf
+echo 'RABBIT_PASSWORD=Secret123' >> /opt/stack/devstack/local.conf
+echo 'SERVICE_PASSWORD=Secret123' >> /opt/stack/devstack/local.conf
+echo 'SWIFT_HASH=66a3d6b56c1f479c8b4e70ab5c2000f5' >> /opt/stack/devstack/local.conf
+echo 'SWIFT_REPLICAS=1' >> /opt/stack/devstack/local.conf
+echo 'SWIFT_DATA_DIR=$DEST/data' >> /opt/stack/devstack/local.conf
+echo 'enable_service s-proxy s-object s-container s-account rabbit mysql key' >> /opt/stack/devstack/local.conf
+echo 'SERVICE_TOKEN=ALongStringUsuallyHere' >> /opt/stack/devstack/local.conf
+echo 'enable_plugin heat http://git.openstack.org/openstack/heat stable/ocata' >> /opt/stack/devstack/local.conf
+echo 'enable_plugin murano http://git.openstack.org/openstack/murano stable/ocata' >> /opt/stack/devstack/local.conf
+
+# change to devstack directory and build it
+cd devstack
+./stack.sh
+

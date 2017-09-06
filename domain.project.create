@@ -1,0 +1,13 @@
+#
+set -x
+cd ~/devstack
+source openrc admin admin
+openstack domain create --description "Peach test domain" peach-domain
+openstack project create --domain peach-domain peach-proj
+openstack user create --domain peach-domain --project peach-proj peach
+openstack user show peach
+openstack role create --domain peach-domain peach-role
+openstack role add --project peach-proj --user peach admin
+openstack role list
+openstack user set --password T1m3l3ss peach
+

@@ -1,0 +1,8 @@
+#
+set -x
+cinder type-create lvm1
+cinder type-create lvm2
+cinder type-create nfs1
+cinder type-key lvm1 set volume_backend_name=lvmA
+cinder type-key lvm2 set volume_backend_name=lvmB
+cinder type-key nfs1 set volume_backend_name=nfsA

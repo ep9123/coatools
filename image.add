@@ -1,0 +1,6 @@
+#
+set -x
+openstack image set --public cirros-0.3.4-x86_64
+openstack image add project cirros-0.3.4-x86_64 apress
+openstack image set --property os_name=linux --property contact_person="peach@att.com" cirros-0.3.4-x86_64
+openstack image show cirros-0.3.4-x86_64

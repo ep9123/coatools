@@ -1,0 +1,25 @@
+#
+set -x
+
+#openstack volume create --size 1 --image cirros  eep-vol
+openstack volume create --size 1 eep-vol
+
+nova boot --flavor m1.tiny --image cirros eep-inst
+nova list
+sleep 30
+nova list
+nova show eep-inst
+
+openstack server list
+openstack server show eep-inst
+
+#nova volume-attach eep-inst eep-vol
+openstack server add volume eep-inst eep-vol 
+
+openstack volume list
+openstack volume show eep-vol
+
+openstack server remove volume eep-inst eep-vol
+openstack volume delete eep-vol
+openstack server delete eep-inst
+

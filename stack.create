@@ -1,0 +1,5 @@
+#
+set -x
+
+openstack stack create -t $1 $2
+

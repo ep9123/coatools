@@ -1,0 +1,20 @@
+#
+#usage: openstack flavor create [-h] [-f {json,shell,table,value,yaml}]
+#                               [-c COLUMN] [--max-width <integer>]
+#                               [--print-empty] [--noindent] [--prefix PREFIX]
+#                               [--id <id>] [--ram <size-mb>]
+#                               [--disk <size-gb>] [--ephemeral <size-gb>]
+#                               [--swap <size-mb>] [--vcpus <vcpus>]
+#                               [--rxtx-factor <factor>] [--public | --private]
+#                               [--property <key=value>] [--project <project>]
+#                               [--project-domain <project-domain>]
+#                               <flavor-name>
+
+set -x
+
+openstack flavor list
+openstack flavor show m1.tiny
+openstack flavor create --public --disk 3 --ram 400 --vcpus 1 m10.tiny
+openstack flavor list
+openstack flavor show m10.tiny
+

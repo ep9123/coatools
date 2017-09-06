@@ -1,0 +1,27 @@
+heat_template_version: newton
+
+description:  Instance, router and network
+
+resources:
+  private:
+    type: OS::Neutron::Net
+
+  subnet:
+    type: OS::Neutron::Subnet
+    properties:
+      network_id: { get_resource: net }
+      cidr: "10.8.1.0/24"
+      dns_nameservers: [ "8.8.8.8", "8.8.4.4" ]
+      ip_version: 4
+
+  router:
+    type: OS::Neutron::Router
+    properties:
+      external_gateway_info: { network: public }
+
+  interface:
+    type: OS::Neutron::RouterInterface
+    properties:
+      router_id: { get_resource: router }
+      subnet: { get_resource: subnet }
+

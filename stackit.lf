@@ -1,0 +1,34 @@
+#
+# devstack newton install on linux foundation vm
+sudo apt-get -y update
+sudo apt-get -y upgrade
+sudo apt-get -y install git         
+
+# as stack user  (sudo -iu stack) execute commands below to build local.conf file
+
+git clone https://git.openstack.org/openstack-dev/devstack -b stable/newton
+#sed -i "s:-git:-http:g" ~/devstack/stackrc
+
+echo '[[local|localrc]]' >> ~/devstack/local.conf
+echo 'LOGFILE=~/logs/stack.sh.log' >> ~/devstack/local.conf
+echo 'HOST_IP=192.168.97.1' >> ~/devstack/local.conf
+echo 'FLAT_INTERFACE=eth2' >> ~/devstack/local.conf
+echo 'MULTI_HOST=1' >> ~/devstack/local.conf
+echo 'FORCE=yes' >> ~/devstack/local.conf
+echo 'LOGFILE=/opt/stack/logs/stack.sh.log' >> /opt/stack/devstack/local.conf
+echo 'ADMIN_PASSWORD=openstack' >> ~/devstack/local.conf
+echo 'DATABASE_PASSWORD=openstack' >> ~/devstack/local.conf
+echo 'RABBIT_PASSWORD=openstack' >> ~/devstack/local.conf
+echo 'SERVICE_PASSWORD=openstack' >> ~/devstack/local.conf
+echo 'SWIFT_HASH=66a3d6b56c1f479c8b4e70ab5c2000f5' >> ~/devstack/local.conf
+echo 'SWIFT_REPLICAS=1' >> ~/devstack/local.conf
+echo 'SWIFT_DATA_DIR=$DEST/data' >> ~/devstack/local.conf
+echo 'enable_service s-proxy s-object s-container s-account rabbit mysql key' >> ~/devstack/local.conf
+echo 'SERVICE_TOKEN=ALongStringUsuallyHere' >> ~/devstack/local.conf
+echo 'enable_plugin heat http://git.openstack.org/openstack/heat stable/newton' >> ~/devstack/local.conf
+echo 'enable_plugin murano http://git.openstack.org/openstack/murano stable/newton' >> ~/devstack/local.conf
+
+# change to devstack directory and build it
+cd devstack
+./stack.sh
+

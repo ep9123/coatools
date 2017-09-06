@@ -1,0 +1,49 @@
+heat_template_version: newton
+description: A base Cirros 0.3.5 server
+
+resources:
+  server:
+    type: OS::Nova::Server
+    properties:
+      block_device_mapping:
+        - device_name: vda
+          delete_on_termination: true
+          volume_id: { get_resource: os-volume }
+      flavor: m1.tiny
+      networks:
+        - port: { get_resource: port }
+
+  port:
+    type: OS::Neutron::Port
+    properties:
+      network: private
+
+  floating-ip:
+    type: OS::Neutron::FloatingIP
+    properties:
+      floating_network: public
+
+  floating-ip-assoc:
+    type: OS::Neutron::FloatingIPAssociation
+    properties:
+      floatingip_id: { get_resource: floating-ip }
+      port_id: { get_resource: port }
+
+  os-volume:
+    type: OS::Cinder::Volume
+    properties:
+      image: cirros
+      size: 1
+
+  sdb-volume:
+    type: OS::Cinder::Volume
+    properties:
+      size: 1
+
+  vdb-volume-attach:
+    type: OS::Cinder::VolumeAttachment
+    properties:
+      volume_id: { get_resource: sdb-volume }
+      instance_uuid: { get_resource: server }
+      mountpoint: /dev/vdb
+

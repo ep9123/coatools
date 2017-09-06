@@ -1,0 +1,5 @@
+#
+set -x
+cinder type-delete lvm1
+cinder type-delete lvm2
+cinder type-delete nfs1

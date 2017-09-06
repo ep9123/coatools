@@ -1,0 +1,35 @@
+#
+set -x
+# cinder service runs as a screen in devstack
+#systemctl |grep cinder
+
+cinder service-list
+
+systemctl |grep lvmetad.service
+
+systemctl |grep target.service
+
+cinder create --display-name eep-vol 1
+
+openstack volume create --size 1 eep-vol-2
+
+openstack volume list
+
+cinder list
+
+sudo lvs
+
+openstack volume show eep-vol
+openstack volume show eep-vol-2
+
+openstack server create --flavor m1.tiny --image cirros --key-name eep-key --security-group web-ssh eep-inst
+
+openstack server list
+
+sleep 20
+
+openstack server show inst-inst
+
+openstack server add volume --device /dev/vdb eep-inst eep-vol
+openstack server add volume --device /dev/vdc eep-inst eep-vol-2
+

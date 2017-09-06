@@ -1,0 +1,14 @@
+#
+set -x
+
+openstack server list 
+openstack volume list 
+
+openstack server remove volume crypt-inst crypt-vol
+openstack volume delete crypt-vol
+openstack server delete crypt-inst
+sleep 5
+openstack volume type delete LUKS
+
+openstack server list 
+openstack volume list 

@@ -1,0 +1,12 @@
+heat_template_version: newton
+
+description:  Simple template to deploy a single compute instance
+
+resources:
+  server:
+    type: OS::Nova::Server
+    properties:
+      image:  cirros
+      flavor:  m1.tiny
+      networks:
+       - network: private

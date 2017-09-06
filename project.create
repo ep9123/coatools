@@ -1,0 +1,10 @@
+#
+set -x
+openstack project create --description "peach test project" peach-proj
+openstack project list 
+openstack project show peach-proj
+openstack user create --password T1m3l3ss peach
+openstack role add --project peach-proj --user peach admin
+openstack role add --project peach-proj --user peach member
+openstack role add --project peach-proj --user admin admin
+openstack role list

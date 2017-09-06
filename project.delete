@@ -1,0 +1,8 @@
+#
+set -x
+openstack user list
+openstack project list
+openstack user delete peach
+openstack project delete peach-proj
+openstack user list
+openstack project list

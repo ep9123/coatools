@@ -1,0 +1,7 @@
+#
+set -x
+ssh-keygen -f ~/.ssh/eep-key
+
+openstack keypair create --public-key ~/.ssh/eep-key.pub eep-key
+openstack keypair list
+openstack keypair show eep-key

@@ -1,0 +1,14 @@
+#
+set -x
+openstack volume list
+openstack server list
+
+openstack server remove volume eep-inst eep-vol
+openstack server remove volume eep-inst eep-vol-2
+cinder delete eep-vol
+#openstack volume delete eep-vol
+openstack volume delete eep-vol-2
+openstack server delete eep-inst
+
+openstack volume list
+openstack server list

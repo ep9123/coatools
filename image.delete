@@ -1,0 +1,5 @@
+#
+set -x
+openstack image list
+openstack image delete cirros
+openstack image list
